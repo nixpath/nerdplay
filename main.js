@@ -1,22 +1,16 @@
 // Nerdplay Main script
 var http = require("http");
 var fs = require("fs");
-var page = `<html>
-<head>
-<title>Nerdplay!</title>
-</head>
-<body>
 
-</body>
-</html>
-`
+fs.readFile('./index.html', function (err, html) {
 
-http.createServer(function (request, response) {
+    if (err) throw err;    
 
-   // Send the HTTP header 
-   // HTTP Status: 200 : OK
-   response.writeHead(200, {'Content-Type': 'text/html'});
-   response.end(page);
-}).listen(3000);
+    http.createServer(function(request, response) {  
+        response.writeHeader(200, {"Content-Type": "text/html"});  
+        response.write(html);  
+        response.end();  
+    }).listen(3000);
+});
 
 console.log("Now you can access Nerdplay through port 3000 and localhost or device IP (device that runs Nerdplay)");
